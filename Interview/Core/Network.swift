@@ -10,7 +10,7 @@ import Alamofire
 
 struct Network {
 
-    mutating func getContent(completion: @escaping (Result<Month, Error>) -> Void) {
+    func getContent(completion: @escaping (Result<Month, Error>) -> Void) {
         AF.request("https://hallow.com/interview/activity.json", method: .get)
             .responseDecodable(of: [Day].self) { response in
                 if let error = response.error {
