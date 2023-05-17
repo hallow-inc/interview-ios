@@ -24,4 +24,12 @@ struct Network {
                 // TODO: Get days that are in first month and pass to completion
         }
     }
+
+    func getContent() async throws -> Month {
+        try await withCheckedThrowingContinuation { continuation in
+            getContent { result in
+                continuation.resume(with: result)
+            }
+        }
+    }
 }
