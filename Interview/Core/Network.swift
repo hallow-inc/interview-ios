@@ -8,8 +8,7 @@
 import Foundation
 import Alamofire
 
-struct Network {
-
+class Network {
     func getContent(completion: @escaping (Result<Month, Error>) -> Void) {
         AF.request("https://hallow.com/interview/activity.json", method: .get)
             .responseDecodable(of: [Day].self) { response in

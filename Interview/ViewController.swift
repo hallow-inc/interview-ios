@@ -9,7 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    var network = Network()
+    private var network = Network()
 
     override func viewDidLoad() {
         super.viewDidLoad()

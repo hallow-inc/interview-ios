@@ -11,11 +11,11 @@ class WeekView: UIStackView {
     convenience init(days: [Day?]) {
         self.init()
 
-        self.distribution = .fillEqually
-        self.axis = .horizontal
+        distribution = .fillEqually
+        axis = .horizontal
 
         for day in days {
-            self.addArrangedSubview(DayView(day: day))
+            addArrangedSubview(DayView(day: day))
         }
     }
 }

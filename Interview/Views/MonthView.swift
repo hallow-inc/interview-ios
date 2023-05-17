@@ -10,20 +10,17 @@ import UIKit
 // TODO: Finish the "load" method
 class MonthView: UIStackView {
 
-    var month: Month?
     init() {
         super.init(frame: .zero)
-        self.setup()
+        self.configure()
     }
 
     required init(coder: NSCoder) {
         super.init(coder: coder)
-        self.setup()
+        self.configure()
     }
 
-    func load(month: Month) {
-        self.month = month
-
+    func render(month: Month) {
         let label = UILabel()
         label.text = month.monthString
         label.textAlignment = .center
@@ -33,7 +30,7 @@ class MonthView: UIStackView {
         // TODO: Create WeekView's for the given month
     }
 
-    private func setup() {
+    private func configure() {
         self.axis = .vertical
         self.spacing = 10
     }
