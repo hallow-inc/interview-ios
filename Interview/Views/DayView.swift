@@ -9,76 +9,36 @@ import UIKit
 
 class DayView: UIView {
 
-    static let smallSize: CGFloat = 10
-    static let largeSize: CGFloat = 30
+    private static let smallSize: CGFloat = 10
+    private static let largeSize: CGFloat = 30
 
-    let circleView = UIView()
-    let streakView = UIView()
+    private let circleView = UIView()
+    private let streakView = UIView()
 
-    var circleWidthConstraint: NSLayoutConstraint?
-    var circleHeightConstraint: NSLayoutConstraint?
-
-    var size: CGFloat = DayView.largeSize {
-        didSet {
-            circleHeightConstraint?.constant = size
-            circleWidthConstraint?.constant = size
-            circleView.layer.cornerRadius = size / 2
-            circleView.layer.masksToBounds = true
-        }
-    }
-
-    var day: Day?
-    convenience init(day: Day?) {
-        self.init()
+    private let day: Day?
+    init(day: Day?) {
         self.day = day
-        self.setup()
+        super.init(frame: .zero)
+        configure()
+        constrain()
     }
 
-    func setup() {
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
-        size = day?.hasSession == true
-            ? Self.largeSize
-            : Self.smallSize
+    private func configure() {
+        circleView.layer.masksToBounds = true
 
         translatesAutoresizingMaskIntoConstraints = false
-        heightAnchor.constraint(equalToConstant: Self.largeSize + 10).isActive = true
-
-        addSubview(streakView)
-        addSubview(circleView)
-
-        setupColors()
-
         circleView.translatesAutoresizingMaskIntoConstraints = false
-        circleView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        circleView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        circleWidthConstraint = circleView.widthAnchor.constraint(equalToConstant: size)
-        circleWidthConstraint?.isActive = true
-        circleHeightConstraint = circleView.heightAnchor.constraint(equalToConstant: size)
-        circleHeightConstraint?.isActive = true
-
-        guard let streak = day?.streak else { return }
         streakView.translatesAutoresizingMaskIntoConstraints = false
-        streakView.heightAnchor.constraint(equalToConstant: Self.largeSize).isActive = true
-        streakView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
 
-        switch streak {
-        case .start:
-            streakView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5).isActive = true
-            streakView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        case .middle:
-            streakView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-            streakView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        case .end:
-            streakView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5).isActive = true
-            streakView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        }
+        configureColors()
     }
 
-    func setupColors() {
-        guard let day = day else {
-            circleView.backgroundColor = .clear
-            return
-        }
+    private func configureColors() {
+        guard let day = day else { return circleView.backgroundColor = .clear }
 
         let color: UIColor
         if day.hasSession { color = .green }
@@ -86,5 +46,43 @@ class DayView: UIView {
 
         circleView.backgroundColor = color
         streakView.backgroundColor = color
+    }
+
+    private func constrain() {
+        addSubview(circleView)
+
+        let size = day?.hasSession == true ? Self.largeSize : Self.smallSize
+        var constraints: [NSLayoutConstraint] = [
+            heightAnchor.constraint(equalToConstant: Self.largeSize + 10),
+            circleView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            circleView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            circleView.widthAnchor.constraint(equalToConstant: size),
+            circleView.heightAnchor.constraint(equalToConstant: size),
+        ]
+
+        if let streak = day?.streak {
+            addSubview(streakView)
+            constraints.append(streakView.heightAnchor.constraint(equalToConstant: Self.largeSize))
+            constraints.append(streakView.centerYAnchor.constraint(equalTo: centerYAnchor))
+
+            switch streak {
+            case .start:
+                constraints.append(streakView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5))
+                constraints.append(streakView.rightAnchor.constraint(equalTo: rightAnchor))
+            case .middle:
+                constraints.append(streakView.widthAnchor.constraint(equalTo: widthAnchor))
+                constraints.append(streakView.leftAnchor.constraint(equalTo: leftAnchor))
+            case .end:
+                constraints.append(streakView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5))
+                constraints.append(streakView.leftAnchor.constraint(equalTo: leftAnchor))
+            }
+        }
+
+        NSLayoutConstraint.activate(constraints)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        circleView.layer.cornerRadius = circleView.frame.height / 2
     }
 }

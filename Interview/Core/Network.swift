@@ -8,9 +8,8 @@
 import Foundation
 import Alamofire
 
-struct Network {
-
-    mutating func getContent(completion: @escaping (Result<Month, Error>) -> Void) {
+class Network {
+    func getContent(completion: @escaping (Result<Month, Error>) -> Void) {
         AF.request("https://hallow.com/interview/activity.json", method: .get)
             .responseDecodable(of: [Day].self) { response in
                 if let error = response.error {
@@ -22,6 +21,14 @@ struct Network {
 
                 // TODO: Finish creating models
                 // TODO: Get days that are in first month and pass to completion
+        }
+    }
+
+    func getContent() async throws -> Month {
+        try await withCheckedThrowingContinuation { continuation in
+            getContent { result in
+                continuation.resume(with: result)
+            }
         }
     }
 }

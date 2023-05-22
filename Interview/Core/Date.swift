@@ -111,6 +111,10 @@ extension Date {
         return Calendar.current.component(.weekday, from: self)
     }
 
+    var weekOfYear: Int {
+        return Calendar.current.component(.weekOfYear, from: self)
+    }
+
     var startOfWeek: Date {
         let gregorian = Calendar(identifier: .gregorian)
         return gregorian.date(from: gregorian.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))!
