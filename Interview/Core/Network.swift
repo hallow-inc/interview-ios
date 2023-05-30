@@ -11,7 +11,7 @@ import Alamofire
 class Network {
     func getContent(completion: @escaping (Result<Month, Error>) -> Void) {
         AF.request("https://hallow.com/interview/activity.json", method: .get)
-            .responseDecodable(of: [Day].self) { response in
+            .responseDecodable(of: [Day].self, decoder: JSONDecoder()) { response in
                 if let error = response.error {
                     completion(.failure(error))
                 }

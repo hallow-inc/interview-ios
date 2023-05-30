@@ -117,3 +117,11 @@ extension Date {
         return range.count
     }
 }
+
+extension DateFormatter {
+    static let forDayDecoding: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }()
+}
