@@ -7,7 +7,7 @@
 
 import UIKit
 
-// TODO: Finish the "load" method
+// TODO: Finish the "render" method
 class MonthView: UIStackView {
 
     init() {

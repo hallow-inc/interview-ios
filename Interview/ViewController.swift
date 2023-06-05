@@ -18,7 +18,7 @@ class ViewController: UIViewController {
 
         // TODO: Load in a month from the network request
         // TODO: Create a month view inside of this view controller
-        // TODO: Pass month to `load(month: Month)` to display it
+        // TODO: Pass month to `render(month: Month)` to display it
         // TODO: Modify so that the dot for today is purple
     }
 }
