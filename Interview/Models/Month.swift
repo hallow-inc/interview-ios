@@ -15,8 +15,7 @@ struct Month {
     /// and a list of all days the user completed a prayer in that month.
     ///
     /// - Parameter date: Any Date inside of the month
-    /// - Parameter days: A list of the days a user completed a prayer
-    ///     in that month. This list could be empty.
+    /// - Parameter days: A list of the days in that month.
     ///
     init(date: Date, days: [Day]) {
         self.date = date

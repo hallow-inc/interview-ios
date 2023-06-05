@@ -26,13 +26,7 @@ extension Date {
     }
 
     func isInSameYear (date: Date) -> Bool { isEqual(to: date, toGranularity: .year) }
-    func isInSameMonth(date: Date) -> Bool {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM/yyyy"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(identifier: "UTC")
-        return formatter.string(from: date) == formatter.string(from: self)
-    }
+    func isInSameMonth(date: Date) -> Bool { isEqual(to: date, toGranularity: .month) }
     func isInSameDay  (date: Date) -> Bool { isEqual(to: date, toGranularity: .day) }
     func isInSameWeek (date: Date) -> Bool { isEqual(to: date, toGranularity: .weekOfYear) }
 
@@ -47,18 +41,7 @@ extension Date {
     var isInTheFuture: Bool { self > Date() }
     var isInThePast: Bool { self < Date() }
 
-    var isInTodayUtc: Bool {
-        let dateFormatter1 = DateFormatter()
-        dateFormatter1.dateFormat = "MM/dd/yyyy"
-        dateFormatter1.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter1.timeZone = TimeZone(identifier: "UTC")
-
-        let dateFormatter2 = DateFormatter()
-        dateFormatter2.dateFormat = "MM/dd/yyyy"
-        dateFormatter2.locale = Locale(identifier: "en_US_POSIX")
-
-        return dateFormatter1.string(from: self) == dateFormatter2.string(from: Date())
-    }
+    var isInTodayUtc: Bool { isEqual(to: Date().localToUTC(), toGranularity: .day) }
 
     func localToUTC() -> Date {
         let timeZone = TimeZone(abbreviation: "UTC")!
@@ -107,13 +90,8 @@ extension Date {
         return components.minute ?? 0
     }
 
-    var weekday: Int {
-        return Calendar.current.component(.weekday, from: self)
-    }
-
-    var weekOfYear: Int {
-        return Calendar.current.component(.weekOfYear, from: self)
-    }
+    var weekday: Int { Calendar.current.component(.weekday, from: self) }
+    var weekOfYear: Int { Calendar.current.component(.weekOfYear, from: self) }
 
     var startOfWeek: Date {
         let gregorian = Calendar(identifier: .gregorian)
@@ -138,4 +116,12 @@ extension Date {
         let range = Calendar.current.range(of: .day, in: .month, for: firstDayOfTheMonth)!
         return range.count
     }
+}
+
+extension DateFormatter {
+    static let forDayDecoding: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }()
 }
