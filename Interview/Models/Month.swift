@@ -23,16 +23,11 @@ struct Month {
     }
 
     var monthString: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM"
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
-        return dateFormatter.string(from: date)
+        date.formatted(.dateTime.month(.wide))
     }
 
     var yearString: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYY"
-        return dateFormatter.string(from: date)
+        date.formatted(.dateTime.year(.padded(4)))
     }
 
     var month: Int {
