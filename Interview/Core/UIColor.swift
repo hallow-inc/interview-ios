@@ -12,7 +12,6 @@ extension UIColor {
     static var grey: UIColor = .init(named: "grey")
     static var purple: UIColor = .init(named: "purple")
     static var green: UIColor = .init(named: "green")
-    static var paleGreen: UIColor = .init(named: "paleGreen")
 
     convenience init(named: String) {
         self.init(
