@@ -24,7 +24,7 @@ class MonthView: UIStackView {
         let label = UILabel()
         label.text = month.monthString
         label.textAlignment = .center
-        label.textColor = .black
+        label.textColor = .label
         addArrangedSubview(label)
 
         // TODO: Create WeekView's for the given month
