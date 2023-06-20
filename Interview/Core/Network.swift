@@ -20,16 +20,19 @@ class Network {
         }
     }
 
-    func getContent(completion: @escaping (Result<Month, Error>) -> Void) {
+    /// Fetches the first month of the user's activity. Call this version if you are more familiar with
+    /// closure-based async handling.
+    func getFirstMonth(completion: @escaping (Result<Month, Error>) -> Void) {
         getActivity { result in
             print(result)
             // TODO: Get days that are in first month and pass to completion
         }
     }
 
-    func getContent() async throws -> Month {
+    /// Fetches the first month of the user's activity. Call this version if you are more familiar with async await.
+    func getFirstMonth() async throws -> Month {
         try await withCheckedThrowingContinuation { continuation in
-            getContent { result in
+            getFirstMonth { result in
                 continuation.resume(with: result)
             }
         }
