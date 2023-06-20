@@ -6,18 +6,26 @@
 //
 
 import Foundation
-import Alamofire
 
 class Network {
 
     /// Fetches the user's activity. The resulting array of Days can be assumed to be contiguous and
     /// in ascending order by date
     func getActivity(completion: @escaping (Result<[Day], Error>) -> Void) {
-        AF.request("https://hallow.com/interview/activity.json", method: .get)
-            .responseDecodable(of: [Day].self, decoder: JSONDecoder()) { response in
-                // TODO: Finish creating models
-                completion(response.result)
-        }
+        let url = URL(string: "https://hallow.com/interview/activity.json")!
+        URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, error in
+            if let error {
+                completion(.failure(error))
+            }
+            if let data {
+                do {
+                    let days = try JSONDecoder().decode([Day].self, from: data)
+                    completion(.success(days))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+        }.resume()
     }
 
     /// Fetches the first month of the user's activity. Call this version if you are more familiar with
