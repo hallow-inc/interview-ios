@@ -90,6 +90,7 @@ extension Date {
         return components.minute ?? 0
     }
 
+    /// An integer describing the day of the week. Sunday is 1.
     var weekday: Int { Calendar.current.component(.weekday, from: self) }
     var weekOfYear: Int { Calendar.current.component(.weekOfYear, from: self) }
 
