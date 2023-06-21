@@ -61,7 +61,7 @@ class DayView: UIView {
         ]
 
         if let streak = day?.streak {
-            addSubview(streakView)
+            insertSubview(streakView, at: 0)
             constraints.append(streakView.heightAnchor.constraint(equalToConstant: Self.largeSize))
             constraints.append(streakView.centerYAnchor.constraint(equalTo: centerYAnchor))
 
