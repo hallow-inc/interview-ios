@@ -25,4 +25,4 @@ Utilizing the provided base code, create an app that mimics the UI in the follow
 
 ### Notes
 * Some base code has been provided for you in this repository, feel free to use as much or as little as you would like
-* For networking, some SPM packages have been pre-added for your use
+* Feel free to pull in any Swift packages that you would like to use as well.
