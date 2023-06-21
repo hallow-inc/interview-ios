@@ -9,8 +9,8 @@ import Foundation
 
 class Network {
 
-    /// Fetches the user's activity. The resulting array of Days can be assumed to be contiguous and
-    /// in ascending order by date
+    /// Fetches the user's activity. The resulting array of Days can be assumed to be in full-month blocks,
+    /// contiguous, and in ascending order by date
     func getActivity(completion: @escaping (Result<[Day], Error>) -> Void) {
         let url = URL(string: "https://hallow.com/interview/activity.json")!
         URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, error in
